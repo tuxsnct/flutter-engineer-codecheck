@@ -1,4 +1,6 @@
-include: package:flutter_lints/flutter.yaml
+# 個人的にコードの一貫性を重視しているためflutter_lintsから変更
+include: package:very_good_analysis/analysis_options.yaml
 
 linter:
   rules:
+    public_member_api_docs: false
