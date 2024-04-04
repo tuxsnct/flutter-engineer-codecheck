@@ -1,7 +1,6 @@
 name: Analyze and Test
 on:
   push:
-  workflow_dispatch:
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -16,10 +15,20 @@ jobs:
         with:
           channel: stable
           cache: true
+      - name: Cache build runner
+        uses: actions/cache@v2
+        with:
+          path: '**/.dart_tool/build'
+          key: build-runner-${{ hashFiles('**/asset_graph.json') }}-${{ hashFiles('**/pubspec.lock') }}
+          restore-keys: build-runner-
       - name: Get dependencies
         run: flutter pub get
-      - run: dart format --output=none --set-exit-if-changed .
-      - run: flutter analyze
+      - name: Exec build_runner
+        run: dart pub run build_runner build
+      - name: Format
+        run: dart format --output=none --set-exit-if-changed .
+      - name: Analyze
+        run: flutter analyze
   test:
     runs-on: ubuntu-latest
     steps:
@@ -30,7 +39,15 @@ jobs:
         with:
           channel: stable
           cache: true
+      - name: Cache build runner
+        uses: actions/cache@v2
+        with:
+          path: '**/.dart_tool/build'
+          key: build-runner-${{ hashFiles('**/asset_graph.json') }}-${{ hashFiles('**/pubspec.lock') }}
+          restore-keys: build-runner-
       - name: Get dependencies
         run: flutter pub get
+      - name: Exec build_runner
+        run: dart pub run build_runner build
       - name: Run tests
         run: flutter test

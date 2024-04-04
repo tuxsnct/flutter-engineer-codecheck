@@ -1,6 +1,5 @@
 name: Deploy
 on:
-  workflow_dispatch:
   workflow_run:
     workflows: [ Analyze and Test ]
     types:
@@ -23,8 +22,16 @@ jobs:
         with:
           channel: stable
           cache: true
+      - name: Cache build runner
+        uses: actions/cache@v2
+        with:
+          path: '**/.dart_tool/build'
+          key: build-runner-${{ hashFiles('**/asset_graph.json') }}-${{ hashFiles('**/pubspec.lock') }}
+          restore-keys: build-runner-
       - name: Get dependencies
         run: flutter pub get
+      - name: Exec build_runner
+        run: dart pub run build_runner build
       - name: Build APK
         run: flutter build apk --release
       - name: Upload artifact
@@ -44,8 +51,16 @@ jobs:
         with:
           channel: stable
           cache: true
+      - name: Cache build runner
+        uses: actions/cache@v2
+        with:
+          path: '**/.dart_tool/build'
+          key: build-runner-${{ hashFiles('**/asset_graph.json') }}-${{ hashFiles('**/pubspec.lock') }}
+          restore-keys: build-runner-
       - name: Get dependencies
         run: flutter pub get
+      - name: Exec build_runner
+        run: dart pub run build_runner build
       - name: Build iOS
         run: flutter build ios --release --no-codesign
       - name: Upload artifact
@@ -64,8 +79,16 @@ jobs:
         with:
           channel: stable
           cache: true
+      - name: Cache build runner
+        uses: actions/cache@v2
+        with:
+          path: '**/.dart_tool/build'
+          key: build-runner-${{ hashFiles('**/asset_graph.json') }}-${{ hashFiles('**/pubspec.lock') }}
+          restore-keys: build-runner-
       - name: Get dependencies
         run: flutter pub get
+      - name: Exec build_runner
+        run: dart pub run build_runner build
       - name: Build Web
         run: flutter build web --base-href /${{ steps.version.outputs.repository }}/
       - name: Setup Pages
