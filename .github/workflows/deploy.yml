@@ -9,6 +9,7 @@ concurrency:
   cancel-in-progress: true
 permissions:
   pages: write
+  id-token: write
 jobs:
   android:
     name: Build and Deploy Android
