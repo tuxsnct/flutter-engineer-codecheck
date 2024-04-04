@@ -15,7 +15,7 @@ jobs:
         with:
           channel: stable
           cache: true
-      - name: Cache build runner
+      - name: Cache build_runner
         uses: actions/cache@v2
         with:
           path: '**/.dart_tool/build'
@@ -39,7 +39,7 @@ jobs:
         with:
           channel: stable
           cache: true
-      - name: Cache build runner
+      - name: Cache build_runner
         uses: actions/cache@v2
         with:
           path: '**/.dart_tool/build'

@@ -13,7 +13,6 @@ jobs:
   android:
     name: Build and Deploy Android
     runs-on: ubuntu-latest
-    if: ${{ (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop') && (github.event.workflow_run.conclusion == 'success') }}
     steps:
       - name: Clone repository
         uses: actions/checkout@v4
@@ -22,7 +21,7 @@ jobs:
         with:
           channel: stable
           cache: true
-      - name: Cache build runner
+      - name: Cache build_runner
         uses: actions/cache@v2
         with:
           path: '**/.dart_tool/build'
@@ -42,7 +41,7 @@ jobs:
   ios:
     name: Build and Deploy iOS
     runs-on: macos-latest
-    if: ${{ (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop') && (github.event.workflow_run.conclusion == 'success') }}
+    if: ${{ (github.ref == 'refs/heads/main') && (github.event.workflow_run.conclusion == 'success') }}
     steps:
       - name: Clone repository
         uses: actions/checkout@v4
@@ -51,7 +50,7 @@ jobs:
         with:
           channel: stable
           cache: true
-      - name: Cache build runner
+      - name: Cache build_runner
         uses: actions/cache@v2
         with:
           path: '**/.dart_tool/build'
@@ -79,7 +78,7 @@ jobs:
         with:
           channel: stable
           cache: true
-      - name: Cache build runner
+      - name: Cache build_runner
         uses: actions/cache@v2
         with:
           path: '**/.dart_tool/build'
@@ -90,7 +89,7 @@ jobs:
       - name: Exec build_runner
         run: dart pub run build_runner build
       - name: Build Web
-        run: flutter build web --base-href /${{ steps.version.outputs.repository }}/
+        run: flutter build web --base-href /${{ github.event.repository.name }}/
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
