@@ -14,6 +14,5 @@ class HomeRoute extends GoRouteData {
   const HomeRoute() : super();
 
   @override
-  Widget build(BuildContext context, GoRouterState state) =>
-      const HomeScreen(title: 'Flutter Demo Home Page');
+  Widget build(BuildContext context, GoRouterState state) => const HomeScreen();
 }
