@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:github_viewer/config/router.dart';
+import 'package:go_router/go_router.dart';
 
 void main() {
+  GoRouter.optionURLReflectsImperativeAPIs = true;
   runApp(const GithubViewerApp());
 }
 
