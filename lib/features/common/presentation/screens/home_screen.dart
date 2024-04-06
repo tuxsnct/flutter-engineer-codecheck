@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:github_viewer/features/search/presentation/widgets/search_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -8,6 +9,14 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  late SearchController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = SearchController();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,26 +34,31 @@ class _HomeScreenState extends State<HomeScreen> {
               maxLines: 2,
             ),
             const SizedBox(height: 32),
-            FilledButton.tonal(
-              key: const Key('search_button'),
-              onPressed: () {},
-              style: FilledButton.styleFrom(
-                minimumSize: const Size.fromHeight(90),
-              ),
-              child: SizedBox(
-                width: double.maxFinite,
-                child: Wrap(
-                  alignment: WrapAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text(
-                      'Search',
-                      style: Theme.of(context).textTheme.headlineSmall,
-                      overflow: TextOverflow.ellipsis,
+            SearchWidget(
+              controller: _controller,
+              builder: (context, controller) {
+                return FilledButton.tonal(
+                  key: const Key('search_button'),
+                  onPressed: () => controller.openView(),
+                  style: FilledButton.styleFrom(
+                    minimumSize: const Size.fromHeight(90),
+                  ),
+                  child: SizedBox(
+                    width: double.maxFinite,
+                    child: Wrap(
+                      alignment: WrapAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text(
+                          'Search',
+                          style: Theme.of(context).textTheme.headlineSmall,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        const Icon(Icons.search, size: 32),
+                      ],
                     ),
-                    const Icon(Icons.search, size: 32),
-                  ],
-                ),
-              ),
+                  ),
+                );
+              },
             ),
           ],
         ),
