@@ -5,19 +5,29 @@ import 'package:go_router/go_router.dart';
 
 part 'router.g.dart';
 
-final router = GoRouter(
-  initialLocation: '/',
-  routes: $appRoutes,
+extension GoRouterLocation on GoRouter {
+  String get location {
+    final lastMatch = routerDelegate.currentConfiguration.last;
+    final matchList = lastMatch is ImperativeRouteMatch
+        ? lastMatch.matches
+        : routerDelegate.currentConfiguration;
+    return matchList.uri.toString();
+  }
+}
+
+final routingConfig = RoutingConfig(routes: $appRoutes);
+final router = GoRouter.routingConfig(
+  routingConfig: ValueNotifier(routingConfig),
+  initialLocation: const HomeRoute().location,
 );
 
 /*
  ホーム
  path: /
  */
-@TypedGoRoute<HomeRoute>(path: HomeRoute.path)
+@TypedGoRoute<HomeRoute>(path: '/')
 class HomeRoute extends GoRouteData {
   const HomeRoute() : super();
-  static const path = '/';
 
   @override
   Widget build(BuildContext context, GoRouterState state) => const HomeScreen();
@@ -27,10 +37,9 @@ class HomeRoute extends GoRouteData {
  検索結果
  path: /search?query=検索ワード
  */
-@TypedGoRoute<SearchResultRoute>(path: SearchResultRoute.path)
+@TypedGoRoute<SearchResultRoute>(path: '/search')
 class SearchResultRoute extends GoRouteData {
   const SearchResultRoute(this.query) : super();
-  static const path = '/search';
 
   final String query;
 
