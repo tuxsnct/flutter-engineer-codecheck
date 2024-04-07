@@ -5,16 +5,17 @@ class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<HomeScreen> createState() => HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  late SearchController _controller;
+@visibleForTesting
+class HomeScreenState extends State<HomeScreen> {
+  late SearchController controller;
 
   @override
   void initState() {
     super.initState();
-    _controller = SearchController();
+    controller = SearchController();
   }
 
   @override
@@ -35,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const SizedBox(height: 32),
             SearchWidget(
-              controller: _controller,
+              controller: controller,
               builder: (context, controller) {
                 return FilledButton.tonal(
                   key: const Key('search_button'),
