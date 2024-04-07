@@ -38,6 +38,9 @@ jobs:
         with:
           app-id: ${{ vars.APP_ID }}
           private-key: ${{ secrets.PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: flutter-engineer-codecheck
+          skip-token-revoke: true
       - name: Exec build_runner
         run: dart pub run build_runner build
       - name: Build APK
@@ -74,6 +77,9 @@ jobs:
         with:
           app-id: ${{ vars.APP_ID }}
           private-key: ${{ secrets.PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: flutter-engineer-codecheck
+          skip-token-revoke: true
       - name: Exec build_runner
         run: dart pub run build_runner build
       - name: Build iOS
@@ -109,6 +115,9 @@ jobs:
         with:
           app-id: ${{ vars.APP_ID }}
           private-key: ${{ secrets.PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: flutter-engineer-codecheck
+          skip-token-revoke: true
       - name: Exec build_runner
         run: dart pub run build_runner build
       - name: Build Web
