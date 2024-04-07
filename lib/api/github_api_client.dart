@@ -8,10 +8,10 @@ part 'github_api_client.g.dart';
 abstract class GithubApiClient {
   factory GithubApiClient(Dio dio, {String baseUrl}) = _GithubApiClient;
 
+  static const _apiToken = String.fromEnvironment('GITHUB_API_TOKEN');
   static const _headers = <String, dynamic>{
     'Content-Type': 'application/vnd.github+json',
-    // TODO(tuxsnct): アクセストークンを設定する
-    'Authorization': 'Bearer hoge',
+    'Authorization': 'Bearer $_apiToken',
   };
 
   @GET('/search/repositories')
