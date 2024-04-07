@@ -14,7 +14,6 @@ permissions:
 jobs:
   android:
     name: Build and Deploy Android
-    environment: actions
     runs-on: ubuntu-latest
     steps:
       - name: Clone repository
@@ -52,7 +51,6 @@ jobs:
           path: build/app/outputs/apk/release/app-release.apk
   ios:
     name: Build and Deploy iOS
-    environment: actions
     runs-on: macos-latest
     if: ${{ (github.ref == 'refs/heads/main') && (github.event.workflow_run.conclusion == 'success') }}
     steps:
@@ -91,7 +89,6 @@ jobs:
           path: app-release.ipa
   web:
     name: Build and Deploy Web
-    environment: actions
     runs-on: ubuntu-latest
     steps:
       - name: Clone repository
