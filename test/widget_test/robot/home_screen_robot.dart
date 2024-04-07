@@ -20,7 +20,6 @@ class HomeScreenRobot
   @override
   late GoRouter router;
 
-  @override
   Future<void> tapSearchButton() async {
     await tester.tap(find.byKey(const Key('search_button')));
     await tester.pumpAndSettle();
