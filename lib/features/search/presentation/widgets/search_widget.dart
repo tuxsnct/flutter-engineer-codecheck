@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:github_viewer/config/router.dart';
+import 'package:nil/nil.dart';
 
 class SearchWidget extends StatelessWidget {
   const SearchWidget({
@@ -13,35 +13,33 @@ class SearchWidget extends StatelessWidget {
   final Widget Function(BuildContext context, SearchController controller)
       builder;
 
+  SuggestionsBuilder get suggestionsBuilder => (context, controller) => [
+        if (controller.text.isNotEmpty)
+          ListTile(
+            title: Text(controller.text),
+            leading: const Icon(Icons.search),
+            onTap: () => _onSubmitted(controller.text, context),
+          )
+        else
+          nil,
+      ];
+
+  void _onSubmitted(String text, BuildContext context) {
+    controller.closeView(null);
+    SearchResultRoute(text).push<SearchResultRoute>(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return SearchAnchor(
       searchController: controller,
       builder: builder,
-      suggestionsBuilder: (context, controller) => [],
+      suggestionsBuilder: suggestionsBuilder,
       textInputAction: TextInputAction.search,
-      viewBuilder: (suggestions) => const SizedBox(),
       viewHintText: 'Search...',
-      viewLeading: Row(
-        children: <Widget>[
-          IconButton(
-            onPressed: () => controller.closeView(null),
-            icon: const Icon(Icons.arrow_back),
-          ),
-          IconButton(
-            onPressed: () {
-              controller.closeView(null);
-              if (ModalRoute.of(context)!.settings.name != HomeRoute.path) {
-                const HomeRoute().go(context);
-              }
-            },
-            icon: SvgPicture.asset(
-              'assets/github-mark.svg',
-              width: 32,
-              height: 32,
-            ),
-          ),
-        ],
+      viewLeading: IconButton(
+        onPressed: () => controller.closeView(null),
+        icon: const Icon(Icons.arrow_back),
       ),
       viewTrailing: [
         IconButton(
@@ -49,10 +47,7 @@ class SearchWidget extends StatelessWidget {
           icon: const Icon(Icons.close),
         ),
       ],
-      viewOnSubmitted: (text) {
-        controller.closeView(null);
-        SearchResultRoute(text).push(context);
-      },
+      viewOnSubmitted: (text) => _onSubmitted(text, context),
       isFullScreen: true,
     );
   }
