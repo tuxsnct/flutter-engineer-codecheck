@@ -27,6 +27,7 @@ class RepositoryCard extends StatelessWidget {
         isThreeLine: true,
         onTap: onTap,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        subtitleTextStyle: Theme.of(context).textTheme.bodyMedium,
       ),
     );
   }
