@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:github_viewer/config/router.dart';
+import 'package:github_viewer/features/common/infrastructure/models/repository_model.dart';
 import 'package:github_viewer/features/common/presentation/widgets/status_indicator.dart';
 import 'package:github_viewer/features/search/application/repositories_list_controller.dart';
 import 'package:github_viewer/features/search/presentation/widgets/repository_card.dart';
@@ -71,7 +72,7 @@ class _SearchResultScreenState extends ConsumerState<SearchResultScreen> {
                         return RepositoryCard(
                           repository: repository,
                           onTap: () => RepositoryDetailRoute($extra: repository)
-                              .push(context),
+                              .push<RepositoryModel>(context),
                         );
                       },
                     );
