@@ -1,42 +1,18 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:github_viewer/api/github_api_client.dart';
-import 'package:github_viewer/features/common/infrastructure/datasources/remote/github_datasource_impl.dart';
 import 'package:github_viewer/features/common/infrastructure/models/result.dart';
-import 'package:github_viewer/features/common/infrastructure/repositories/github_repository_impl.dart';
-import 'package:github_viewer/features/search/infrastructure/models/search_repositories_model.dart';
+import 'package:github_viewer/features/search/infrastructure/datasources/remote/search_datasource_impl.dart';
+import 'package:github_viewer/features/search/infrastructure/repositories/search_repository_impl.dart';
 import 'package:http_mock_adapter/http_mock_adapter.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
+import '../values/github_api.dart';
 import 'github_api_test.mocks.dart';
 
-final expectedResponse = {
-  'total_count': 40,
-  'incomplete_results': false,
-  'items': [
-    {
-      'name': 'Tetris',
-      'full_name': 'dtrupenn/Tetris',
-      'owner': {
-        'login': 'dtrupenn',
-        'avatar_url':
-            'https://secure.gravatar.com/avatar/e7956084e75f239de85d3a31bc172ace?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png',
-      },
-      'stargazers_count': 1,
-      'watchers_count': 1,
-      'language': 'Assembly',
-      'forks_count': 0,
-      'open_issues_count': 0,
-    }
-  ],
-};
-
-final expectedModel =
-    SearchRepositoriesResponseModel.fromJson(expectedResponse);
-
 @GenerateNiceMocks(
-  [MockSpec<GithubApiClient>(), MockSpec<GithubDatasourceImpl>()],
+  [MockSpec<GithubApiClient>(), MockSpec<SearchDatasourceImpl>()],
 )
 void main() {
   group(
@@ -46,21 +22,21 @@ void main() {
         final dio = Dio(BaseOptions(baseUrl: 'https://api.github.com'));
         DioAdapter(dio: dio).onGet(
           '/search/repositories',
-          (server) => server.reply(200, expectedResponse),
+          (server) => server.reply(200, searchRepositoriesResponse),
         );
 
-        final datasource = GithubDatasourceImpl(GithubApiClient(dio));
-        final repository = GithubRepositoryImpl(datasource);
+        final datasource = SearchDatasourceImpl(GithubApiClient(dio));
+        final repository = SearchRepositoryImpl(datasource);
         final result = await repository.searchRepositories('flutter');
         final json = switch (result) {
           Success(value: final value) => value.toJson(),
           Failure() => null,
         };
-        expect(json, expectedResponse);
+        expect(json, searchRepositoriesResponse);
       });
 
       test('/search/repositoriesで想定のレスポンスを取得できない場合', () async {
-        final datasource = MockGithubDatasourceImpl();
+        final datasource = MockSearchDatasourceImpl();
 
         when(datasource.searchRepositories('flutter')).thenThrow(
           DioException(
@@ -72,7 +48,7 @@ void main() {
           ),
         );
 
-        final repository = GithubRepositoryImpl(datasource);
+        final repository = SearchRepositoryImpl(datasource);
         final result = await repository.searchRepositories('flutter');
         final json = switch (result) {
           Success(value: final value) => value.toJson(),
