@@ -44,12 +44,17 @@ class HomeRoute extends GoRouteData {
   Widget build(BuildContext context, GoRouterState state) => const HomeScreen();
 }
 
+/*
+ リポジトリ詳細画面
+ path: /repository
+ */
 @TypedGoRoute<RepositoryDetailRoute>(path: '/repository')
 class RepositoryDetailRoute extends GoRouteData {
   const RepositoryDetailRoute({required this.$extra}) : super();
 
   final RepositoryModel $extra;
 
+  // TODO(tuxsnct): 値を直接渡さないようにする
   @override
   Widget build(BuildContext context, GoRouterState state) =>
       RepositoryDetailScreen(repository: $extra);
