@@ -11,6 +11,7 @@ import 'package:github_viewer/features/search/providers.dart';
 import 'package:mockito/mockito.dart';
 import 'package:network_image_mock/network_image_mock.dart';
 
+import '../../values/github_api.dart';
 import '../robot/search_result_screen_robot.dart';
 import '../robot/search_result_screen_robot.mocks.dart';
 
@@ -134,6 +135,34 @@ void main() {
 
         expect(robot.router.location, const HomeRoute().location);
       });
+
+      testWidgets(
+        'リポジトリカードをタップして、リポジトリ詳細画面に遷移されること',
+        (WidgetTester tester) async {
+          final repository =
+              await SearchResultScreenRobot.setupMockRepository();
+          final robot = SearchResultScreenRobot(
+            tester: tester,
+            container: ProviderContainer(
+              overrides: [
+                searchRepositoryProvider.overrideWithValue(repository),
+              ],
+            ),
+          );
+          await mockNetworkImagesFor(robot.setup);
+
+          // リポジトリカードをタップ
+          await tester.tap(find.byType(RepositoryCard).first);
+          await tester.pumpAndSettle();
+
+          // リポジトリ詳細画面に遷移されていることを確認
+          final selectedRepository = searchRepositoriesModel.items[0];
+          expect(
+            robot.router.location,
+            RepositoryDetailRoute($extra: selectedRepository).location,
+          );
+        },
+      );
     },
   );
 }

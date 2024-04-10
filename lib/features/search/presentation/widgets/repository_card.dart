@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:github_viewer/features/common/infrastructure/models/repository_model.dart';
 
 class RepositoryCard extends StatelessWidget {
-  const RepositoryCard({required this.repository, super.key});
+  const RepositoryCard({required this.repository, this.onTap, super.key});
 
   final RepositoryModel repository;
+  final GestureTapCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -24,8 +25,7 @@ class RepositoryCard extends StatelessWidget {
         title: Text(repository.fullName),
         subtitle: Text(repository.description ?? ''),
         isThreeLine: true,
-        // TODO(tuxsnct): タップ時のコールバックを設定できるようにする
-        onTap: () {},
+        onTap: onTap,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       ),
     );

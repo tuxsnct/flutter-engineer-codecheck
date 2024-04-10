@@ -66,8 +66,14 @@ class _SearchResultScreenState extends ConsumerState<SearchResultScreen> {
                   if (repositories.isNotEmpty) {
                     return ListView.builder(
                       itemCount: repositories.length,
-                      itemBuilder: (context, index) =>
-                          RepositoryCard(repository: repositories[index]),
+                      itemBuilder: (context, index) {
+                        final repository = repositories[index];
+                        return RepositoryCard(
+                          repository: repository,
+                          onTap: () => RepositoryDetailRoute($extra: repository)
+                              .push(context),
+                        );
+                      },
                     );
                   } else {
                     return const WarningIndicator(
