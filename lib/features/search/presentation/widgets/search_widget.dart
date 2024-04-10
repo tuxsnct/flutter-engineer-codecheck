@@ -6,27 +6,33 @@ class SearchWidget extends StatelessWidget {
   const SearchWidget({
     required this.controller,
     required this.builder,
+    this.initialText,
     super.key,
   });
 
   final SearchController controller;
   final Widget Function(BuildContext context, SearchController controller)
       builder;
+  final String? initialText;
 
   SuggestionsBuilder get suggestionsBuilder => (context, controller) => [
         if (controller.text.isNotEmpty)
           ListTile(
+            key: const Key('search_suggestion'),
             title: Text(controller.text),
             leading: const Icon(Icons.search),
-            onTap: () => _onSubmitted(controller.text, context),
+            onTap: () => _onSubmitted(context),
           )
         else
           nil,
       ];
 
-  void _onSubmitted(String text, BuildContext context) {
-    controller.closeView(null);
-    SearchResultRoute(text).push<SearchResultRoute>(context);
+  void _onClose() => controller.closeView(initialText ?? '');
+
+  Future<void> _onSubmitted(BuildContext context) async {
+    final submittedText = controller.text;
+    if (controller.isAttached) controller.closeView(initialText ?? '');
+    await SearchResultRoute(submittedText).push<SearchResultRoute>(context);
   }
 
   @override
@@ -38,7 +44,7 @@ class SearchWidget extends StatelessWidget {
       textInputAction: TextInputAction.search,
       viewHintText: 'Search...',
       viewLeading: IconButton(
-        onPressed: () => controller.closeView(null),
+        onPressed: _onClose,
         icon: const Icon(Icons.arrow_back),
       ),
       viewTrailing: [
@@ -47,7 +53,7 @@ class SearchWidget extends StatelessWidget {
           icon: const Icon(Icons.close),
         ),
       ],
-      viewOnSubmitted: (text) => _onSubmitted(text, context),
+      viewOnSubmitted: (text) => _onSubmitted(context),
       isFullScreen: true,
     );
   }
