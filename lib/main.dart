@@ -1,6 +1,8 @@
+import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:github_viewer/config/router.dart';
+import 'package:github_viewer/config/theme.dart';
 import 'package:go_router/go_router.dart';
 
 // coverage:ignore-start
@@ -17,13 +19,15 @@ class GithubViewerApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      title: 'Github Viewer',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      routerConfig: router,
+    return DynamicColorBuilder(
+      builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
+        return MaterialApp.router(
+          title: 'Github Viewer',
+          theme: lightTheme(lightDynamic),
+          darkTheme: darkTheme(darkDynamic),
+          routerConfig: router,
+        );
+      },
     );
   }
 }

@@ -9,6 +9,7 @@ environment:
 
 dependencies:
   dio: ^5.4.2+1
+  dynamic_color: ^1.7.0
   flutter:
     sdk: flutter
   flutter_riverpod: ^2.5.1
