@@ -58,76 +58,68 @@ class RepositoryDetailScreen extends ConsumerWidget {
               ),
               const SizedBox(height: 8),
             ],
-            if (repository.stargazersCount != null) ...[
-              Row(
-                children: [
-                  const Icon(Icons.star),
-                  const SizedBox(width: 8),
-                  Text('${repository.stargazersCount} stars'),
-                ],
-              ),
-              const SizedBox(height: 8),
-            ],
-            if (repository.watchersCount != null) ...[
-              Row(
-                children: [
-                  SvgPicture.asset(
-                    'assets/icons/eye.svg',
-                    width: 24,
-                    height: 24,
-                    colorFilter: Theme.of(context).iconTheme.color != null
-                        ? ColorFilter.mode(
-                            Theme.of(context).iconTheme.color!,
-                            BlendMode.srcIn,
-                          )
-                        : null,
-                  ),
-                  const SizedBox(width: 8),
-                  Text('${repository.watchersCount} watching'),
-                ],
-              ),
-              const SizedBox(height: 8),
-            ],
-            if (repository.forksCount != null) ...[
-              Row(
-                children: [
-                  SvgPicture.asset(
-                    'assets/icons/fork.svg',
-                    width: 24,
-                    height: 24,
-                    colorFilter: Theme.of(context).iconTheme.color != null
-                        ? ColorFilter.mode(
-                            Theme.of(context).iconTheme.color!,
-                            BlendMode.srcIn,
-                          )
-                        : null,
-                  ),
-                  const SizedBox(width: 8),
-                  Text('${repository.watchersCount} forks'),
-                ],
-              ),
-              const SizedBox(height: 8),
-            ],
-            if (repository.openIssuesCount != null) ...[
-              Row(
-                children: [
-                  SvgPicture.asset(
-                    'assets/icons/issue.svg',
-                    width: 24,
-                    height: 24,
-                    colorFilter: Theme.of(context).iconTheme.color != null
-                        ? ColorFilter.mode(
-                            Theme.of(context).iconTheme.color!,
-                            BlendMode.srcIn,
-                          )
-                        : null,
-                  ),
-                  const SizedBox(width: 8),
-                  Text('${repository.openIssuesCount} opened issues'),
-                ],
-              ),
-              const SizedBox(height: 8),
-            ],
+            Row(
+              children: [
+                const Icon(Icons.star),
+                const SizedBox(width: 8),
+                Text('${repository.stargazersCount} stars'),
+              ],
+            ),
+            const SizedBox(height: 8),
+            Row(
+              children: [
+                SvgPicture.asset(
+                  'assets/icons/eye.svg',
+                  width: 24,
+                  height: 24,
+                  colorFilter: Theme.of(context).iconTheme.color != null
+                      ? ColorFilter.mode(
+                          Theme.of(context).iconTheme.color!,
+                          BlendMode.srcIn,
+                        )
+                      : null,
+                ),
+                const SizedBox(width: 8),
+                Text('${repository.watchersCount} watching'),
+              ],
+            ),
+            const SizedBox(height: 8),
+            Row(
+              children: [
+                SvgPicture.asset(
+                  'assets/icons/fork.svg',
+                  width: 24,
+                  height: 24,
+                  colorFilter: Theme.of(context).iconTheme.color != null
+                      ? ColorFilter.mode(
+                          Theme.of(context).iconTheme.color!,
+                          BlendMode.srcIn,
+                        )
+                      : null,
+                ),
+                const SizedBox(width: 8),
+                Text('${repository.watchersCount} forks'),
+              ],
+            ),
+            const SizedBox(height: 8),
+            Row(
+              children: [
+                SvgPicture.asset(
+                  'assets/icons/issue.svg',
+                  width: 24,
+                  height: 24,
+                  colorFilter: Theme.of(context).iconTheme.color != null
+                      ? ColorFilter.mode(
+                          Theme.of(context).iconTheme.color!,
+                          BlendMode.srcIn,
+                        )
+                      : null,
+                ),
+                const SizedBox(width: 8),
+                Text('${repository.openIssuesCount} opened issues'),
+              ],
+            ),
+            const SizedBox(height: 8),
           ],
         ),
       ),
