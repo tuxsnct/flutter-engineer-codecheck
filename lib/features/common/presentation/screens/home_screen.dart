@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:github_viewer/features/search/presentation/widgets/search_bar.dart';
 import 'package:github_viewer/features/search/presentation/widgets/search_widget.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -37,29 +38,8 @@ class HomeScreenState extends State<HomeScreen> {
             const SizedBox(height: 32),
             SearchWidget(
               controller: controller,
-              builder: (context, controller) {
-                return FilledButton.tonal(
-                  key: const Key('search_button'),
-                  onPressed: () => controller.openView(),
-                  style: FilledButton.styleFrom(
-                    minimumSize: const Size.fromHeight(90),
-                  ),
-                  child: SizedBox(
-                    width: double.maxFinite,
-                    child: Wrap(
-                      alignment: WrapAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text(
-                          'Search',
-                          style: Theme.of(context).textTheme.headlineSmall,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        const Icon(Icons.search, size: 32),
-                      ],
-                    ),
-                  ),
-                );
-              },
+              builder: (context, controller) =>
+                  TopSearchBar(controller: controller),
             ),
           ],
         ),
