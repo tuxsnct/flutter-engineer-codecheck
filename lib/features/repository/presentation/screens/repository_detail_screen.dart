@@ -7,10 +7,11 @@ class RepositoryDetailScreen extends StatefulWidget {
   final RepositoryModel repository;
 
   @override
-  State<RepositoryDetailScreen> createState() => _RepositoryDetailScreenState();
+  State<RepositoryDetailScreen> createState() => RepositoryDetailScreenState();
 }
 
-class _RepositoryDetailScreenState extends State<RepositoryDetailScreen> {
+@visibleForTesting
+class RepositoryDetailScreenState extends State<RepositoryDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
