@@ -17,11 +17,11 @@ ThemeData lightTheme(ColorScheme? lightColorScheme) => ThemeData(
           .copyWith(tileColor: _lightColorScheme.inversePrimary),
       searchBarTheme: ThemeData.light().searchBarTheme.copyWith(
             backgroundColor:
-                WidgetStatePropertyAll(_lightColorScheme.secondaryContainer),
+                WidgetStatePropertyAll(_lightColorScheme.inversePrimary),
           ),
       searchViewTheme: ThemeData.light()
           .searchViewTheme
-          .copyWith(backgroundColor: _lightColorScheme.secondaryContainer),
+          .copyWith(backgroundColor: _lightColorScheme.inversePrimary),
     );
 
 final _darkColorScheme = ColorScheme.fromSeed(
@@ -42,9 +42,9 @@ ThemeData darkTheme(ColorScheme? darkColorScheme) => ThemeData(
           .copyWith(tileColor: _darkColorScheme.inversePrimary),
       searchBarTheme: ThemeData.dark().searchBarTheme.copyWith(
             backgroundColor:
-                WidgetStatePropertyAll(_darkColorScheme.secondaryContainer),
+                WidgetStatePropertyAll(_darkColorScheme.inversePrimary),
           ),
       searchViewTheme: ThemeData.dark()
           .searchViewTheme
-          .copyWith(backgroundColor: _darkColorScheme.secondaryContainer),
+          .copyWith(backgroundColor: _darkColorScheme.inversePrimary),
     );
