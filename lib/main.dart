@@ -1,13 +1,16 @@
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:github_colour/github_colour.dart';
 import 'package:github_viewer/config/router.dart';
 import 'package:github_viewer/config/theme.dart';
 import 'package:go_router/go_router.dart';
 
 // coverage:ignore-start
-void main() {
+void main() async {
   GoRouter.optionURLReflectsImperativeAPIs = true;
+  WidgetsFlutterBinding.ensureInitialized();
+  await GitHubColour.initialize();
   runApp(ProviderScope(child: GithubViewerApp(router: router)));
 }
 // coverage:ignore-end
