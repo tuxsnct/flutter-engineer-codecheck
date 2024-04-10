@@ -8,11 +8,8 @@ part 'github_api_client.g.dart';
 abstract class GithubApiClient {
   factory GithubApiClient(Dio dio, {String baseUrl}) = _GithubApiClient;
 
-  // TODO(tuxsnct): アプリ内でAPIトークンを設定できるようにする
-  static const _apiToken = 'YOUR_API_TOKEN';
   static const _headers = <String, dynamic>{
     'Content-Type': 'application/vnd.github+json',
-    'Authorization': 'Bearer $_apiToken',
   };
 
   @GET('/search/repositories')
