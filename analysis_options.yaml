@@ -8,6 +8,8 @@ analyzer:
     - lib/**.g.dart
     - lib/**.freezed.dart
     - test/**.mocks.dart
+  plugins:
+    - custom_lint
 
 linter:
   rules:

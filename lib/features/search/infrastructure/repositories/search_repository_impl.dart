@@ -1,13 +1,13 @@
 import 'package:dio/dio.dart';
-import 'package:github_viewer/features/common/domain/datasources/remote/github_datasource.dart';
-import 'package:github_viewer/features/common/domain/repositories/github_repository.dart';
 import 'package:github_viewer/features/common/infrastructure/models/result.dart';
+import 'package:github_viewer/features/search/domain/datasources/remote/search_datasource.dart';
+import 'package:github_viewer/features/search/domain/repositories/search_repository.dart';
 import 'package:github_viewer/features/search/infrastructure/models/search_repositories_model.dart';
 
-class GithubRepositoryImpl implements GithubRepository {
-  GithubRepositoryImpl(this.datasource);
+class SearchRepositoryImpl implements SearchRepository {
+  SearchRepositoryImpl(this.datasource);
 
-  final GithubDatasource datasource;
+  final SearchDatasource datasource;
 
   @override
   Future<Result<SearchRepositoriesResponseModel, DioException>>

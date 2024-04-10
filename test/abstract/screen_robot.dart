@@ -8,6 +8,8 @@ abstract class ScreenRobot {
 
   String get initialLocation => throw UnimplementedError();
 
+  Widget get widget => throw UnimplementedError();
+
   GoRouter get router => throw UnimplementedError();
 }
 
@@ -19,7 +21,8 @@ mixin ScreenSetupRobot implements ScreenRobot {
       routingConfig: ValueNotifier(RoutingConfig(routes: $appRoutes)),
       initialLocation: initialLocation,
     );
-    await tester.pumpWidget(MaterialApp.router(routerConfig: router));
+    await tester.pumpWidget(widget);
+    await tester.pumpAndSettle();
   }
 }
 

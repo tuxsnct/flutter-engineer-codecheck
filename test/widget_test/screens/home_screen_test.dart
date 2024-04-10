@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:github_viewer/config/router.dart';
+import 'package:github_viewer/features/search/providers.dart';
+import 'package:network_image_mock/network_image_mock.dart';
 
 import '../robot/home_screen_robot.dart';
 
@@ -11,21 +14,21 @@ void main() {
       testWidgets(
         'タイトルと検索ボタンが表示されること',
         (WidgetTester tester) async {
-          final robot = HomeScreenRobot(tester);
+          final robot = HomeScreenRobot(tester: tester);
           await robot.setup();
 
           // タイトルが表示されていることを確認
           expect(find.byKey(const Key('title')), findsOneWidget);
 
           // 検索ボタンが表示されていることを確認
-          expect(find.byKey(const Key('search_button')), findsOneWidget);
+          expect(find.byKey(const Key('top_search_bar')), findsOneWidget);
         },
       );
 
       testWidgets(
         '検索ボタンから検索画面を表示されること',
         (WidgetTester tester) async {
-          final robot = HomeScreenRobot(tester);
+          final robot = HomeScreenRobot(tester: tester);
           await robot.setup();
 
           // 検索ボタンをタップ
@@ -40,8 +43,16 @@ void main() {
       testWidgets(
         '検索画面にて、入力後に表示されたサジェストをタップして検索結果画面に遷移されること',
         (WidgetTester tester) async {
-          final robot = HomeScreenRobot(tester);
-          await robot.setup();
+          final repository = await HomeScreenRobot.setupMockRepository();
+          final robot = HomeScreenRobot(
+            tester: tester,
+            container: ProviderContainer(
+              overrides: [
+                searchRepositoryProvider.overrideWithValue(repository),
+              ],
+            ),
+          );
+          await mockNetworkImagesFor(robot.setup);
 
           // 検索ボタンをタップ
           await robot.tapSearchButton();
@@ -50,7 +61,7 @@ void main() {
           await robot.enterSearchWord('hoge');
 
           // サジェストが表示されていることを確認
-          final suggestion = find.byType(ListTile);
+          final suggestion = find.byKey(const Key('search_suggestion'));
           expect(suggestion, findsOneWidget);
 
           // サジェストをタップ
@@ -68,8 +79,16 @@ void main() {
       testWidgets(
         '検索画面にて、入力後にエンターを入力して検索結果画面に遷移されること',
         (WidgetTester tester) async {
-          final robot = HomeScreenRobot(tester);
-          await robot.setup();
+          final repository = await HomeScreenRobot.setupMockRepository();
+          final robot = HomeScreenRobot(
+            tester: tester,
+            container: ProviderContainer(
+              overrides: [
+                searchRepositoryProvider.overrideWithValue(repository),
+              ],
+            ),
+          );
+          await mockNetworkImagesFor(robot.setup);
 
           // 検索ボタンをタップ
           await robot.tapSearchButton();
@@ -92,7 +111,7 @@ void main() {
       testWidgets(
         '検索画面にて、戻るボタンをタップして検索画面が閉じられること',
         (WidgetTester tester) async {
-          final robot = HomeScreenRobot(tester);
+          final robot = HomeScreenRobot(tester: tester);
           await robot.setup();
 
           // 検索ボタンをタップ
