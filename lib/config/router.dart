@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
+import 'package:github_viewer/features/common/infrastructure/models/repository_model.dart';
 import 'package:github_viewer/features/common/presentation/screens/home_screen.dart';
+import 'package:github_viewer/features/repository/presentation/screens/repository_detail_screen.dart';
 import 'package:github_viewer/features/search/presentation/screens/search_result_screen.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nil/nil.dart';
@@ -40,6 +42,17 @@ class HomeRoute extends GoRouteData {
 
   @override
   Widget build(BuildContext context, GoRouterState state) => const HomeScreen();
+}
+
+@TypedGoRoute<RepositoryDetailRoute>(path: '/repository')
+class RepositoryDetailRoute extends GoRouteData {
+  const RepositoryDetailRoute({required this.$extra}) : super();
+
+  final RepositoryModel $extra;
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      RepositoryDetailScreen(repository: $extra);
 }
 
 /*
