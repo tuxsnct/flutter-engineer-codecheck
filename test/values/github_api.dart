@@ -12,7 +12,7 @@ final searchRepositoriesResponse = {
         'avatar_url':
             'https://secure.gravatar.com/avatar/e7956084e75f239de85d3a31bc172ace?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png',
       },
-      'description': null,
+      'description': 'Tetris',
       'stargazers_count': 1,
       'watchers_count': 1,
       'language': 'Assembly',
