@@ -27,5 +27,5 @@ Color githubColour(GithubColourRef ref, String? language) {
     // テスト時にエラーが発生しないようにtry,catchを使用
   }
 
-  return instance != null ? instance![language] : Colors.grey;
+  return instance != null ? instance[language] : Colors.grey;
 }
