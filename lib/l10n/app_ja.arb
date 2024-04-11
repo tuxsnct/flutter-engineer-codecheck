@@ -1,0 +1,15 @@
+{
+  "searchTop": "検索",
+  "searchResult": "検索...",
+  "loading": "読み込み中...",
+  "noRepositoriesFound": "リポジトリが見つかりません",
+  "error": "{error}が発生しました",
+  "@error": {
+    "placeholders": {
+      "error": {
+        "type": "String",
+        "example": "Exception"
+      }
+    }
+  }
+}

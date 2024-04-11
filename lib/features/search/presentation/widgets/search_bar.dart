@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ResultSearchBar extends StatelessWidget {
   const ResultSearchBar({required this.controller, super.key});
@@ -13,7 +14,7 @@ class ResultSearchBar extends StatelessWidget {
       padding:
           const WidgetStatePropertyAll(EdgeInsets.symmetric(horizontal: 24)),
       leading: const Icon(Icons.search),
-      hintText: 'Search',
+      hintText: AppLocalizations.of(context)!.searchResult,
       elevation: const WidgetStatePropertyAll(0),
       focusNode: FocusNode(),
       textInputAction: TextInputAction.search,
@@ -38,7 +39,7 @@ class TopSearchBar extends StatelessWidget {
       padding:
           const WidgetStatePropertyAll(EdgeInsets.symmetric(horizontal: 24)),
       textStyle: textStyle,
-      hintText: 'Search',
+      hintText: AppLocalizations.of(context)!.searchTop,
       hintStyle: textStyle,
       elevation: const WidgetStatePropertyAll(0),
       focusNode: FocusNode(),

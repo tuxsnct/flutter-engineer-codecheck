@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:github_viewer/config/router.dart';
 import 'package:github_viewer/features/common/infrastructure/models/repository_model.dart';
@@ -77,8 +78,9 @@ class _SearchResultScreenState extends ConsumerState<SearchResultScreen> {
                       },
                     );
                   } else {
-                    return const WarningIndicator(
-                      message: 'No repositories found.',
+                    return WarningIndicator(
+                      message:
+                          AppLocalizations.of(context)!.noRepositoriesFound,
                     );
                   }
                 },

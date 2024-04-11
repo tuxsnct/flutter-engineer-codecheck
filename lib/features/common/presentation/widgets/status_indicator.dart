@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoadingIndicator extends StatelessWidget {
   const LoadingIndicator({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        CircularProgressIndicator(),
-        SizedBox(height: 16),
-        Text('Loading...'),
+        const CircularProgressIndicator(),
+        const SizedBox(height: 16),
+        Text(AppLocalizations.of(context)!.loading),
       ],
     );
   }
@@ -55,7 +56,7 @@ class ErrorIndicator extends StatelessWidget {
         const Icon(Icons.error, size: 64, color: Colors.red),
         const SizedBox(height: 16),
         Text(
-          '${error.runtimeType} has occurred.',
+          AppLocalizations.of(context)!.error(error.runtimeType.toString()),
           style: Theme.of(context).textTheme.titleMedium,
         ),
         if (onRetry != null) ...[

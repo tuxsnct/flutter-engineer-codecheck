@@ -1,5 +1,7 @@
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:github_viewer/bootstrap.dart';
 import 'package:github_viewer/config/router.dart';
@@ -31,6 +33,13 @@ class GithubViewerApp extends StatelessWidget {
           theme: lightTheme(lightDynamic),
           darkTheme: darkTheme(darkDynamic),
           routerConfig: router,
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: const [Locale('en'), Locale('ja')],
         );
       },
     );

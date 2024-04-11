@@ -1,0 +1,15 @@
+{
+  "searchTop": "Search",
+  "searchResult": "Search...",
+  "loading": "Loading...",
+  "noRepositoriesFound": "No repositories found.",
+  "error": "{error} has occurred.",
+  "@error": {
+    "placeholders": {
+      "error": {
+        "type": "String",
+        "example": "Exception"
+      }
+    }
+  }
+}
