@@ -1,99 +1,72 @@
-# 株式会社ゆめみ Flutter エンジニアコードチェック課題
+# Github Viewer
 
-本プロジェクトは株式会社ゆめみ（以下弊社）が、弊社に Flutter エンジニアを希望する方に出す課題用のプロジェクトです。 本課題が与えられた方は、以下を詳しく読んだ上で課題に取り組んでください。
+株式会社ゆめみ Flutter エンジニアコードチェック課題
+元のREADME.mdファイルは[README_original.md](README_original.md)を参照してください。
 
-## 概要
+## 構成
 
-以下の要件を満たす、Android・iOS で動作するアプリを Flutter で作成してください。
+Flutter: 3.22.0-0.1.pre
+ルーター: [go_router](https://pub.dev/packages/go_router)
+API: [retrofit](https://pub.dev/packages/retrofit), [dio](https://pub.dev/packages/dio), [freezed](https://pub.dev/packages/freezed), [json_serializable](https://pub.dev/packages/json_serializable))
+DI, 状態管理: [riverpod](https://pub.dev/packages/riverpod)
+テスト: [mockito](https://pub.dev/packages/mockito)
+リント: [very_good_analysis](https://pub.dev/packages/very_good_analysis)
 
-## 要件
+## こだわった点
 
-### 環境
+### Git
 
-- IDE・SDK・プログラミング言語については、基本的に最新の安定版を利用すること
-- 最新の安定版以外を利用する場合は、理由も含めて README に記載すること
-- 状態管理パッケージには Provider/Riverpod のいずれかを使うこと
-- サードパーティーライブラリについては、オープンソースのものに限り制限しない
+普段から使っているGit-flowを採用して、開発を行いました。
+また、IssueやPull Requestなどの機能も用いて開発を行いました。
 
-### 対象 OS バージョン
+### アーキテクチャ
 
-基本的に Flutter プロジェクト作成時のバージョンにすること
+下記のリンクを参考にクリーンアーキテクチャで開発を行いました。（以前このアーキテクチャの採用経験あり）
+https://otakoyi.software/blog/flutter-clean-architecture-with-riverpod-and-supabase#heading-4
 
-|         | OS Version |
-|---------|------------|
-| iOS     | 9.0 ~ 15.2 |
-| Android | 4.1 ~ 12   |
+### テスト
 
-※ 本プロジェクト更新時点
+テストについては、MockitoやRobotパターンを用いて記述しました。
+Robotパターンを採用したことで、共通部分の記述を少なくすることができているかと思います。
+また、Codecovを導入してカバレッジを確認できるようにしました。
+一部テストできない部分は`// coverage:ignore`を使用していますが、カバレッジが高くなるように多くテストコードを記述しました。
 
-### 動作
+[![codecov](https://codecov.io/gh/tuxsnct/flutter-engineer-codecheck/graph/badge.svg?token=69187G1FQX)](https://codecov.io/gh/tuxsnct/flutter-engineer-codecheck)
 
-- 何かしらのキーワードを入力できる
-- 入力したキーワードで GitHub のリポジトリを検索できる
-- GitHub のリポジトリを検索する際、GitHub API（[`search/repositories`](https://docs.github.com/ja/rest/reference/search#search-repositories)）を利用する
-  - [github | Dart Package](https://pub.dev/packages/github) のようなパッケージは利用せず、API を呼ぶ処理を自分で実装すること
-- 検索結果は一覧で概要（リポジトリ名）を表示する
-- 検索結果のアイテムをタップしたら、該当リポジトリの詳細（リポジトリ名、オーナーアイコン、プロジェクト言語、Star 数、Watcher 数、Fork 数、Issue 数）を表示する
+### UI/UX
 
-### デザイン
+Googleアプリを[pubspec.yaml](pubspec.yaml)イメージして開発を行いました。
+リポジトリの検索には、既存に存在しているSearchBarやSearchAnchorを用いたことでリッチなアニメーションになっているかと思います。
+また、ダイナミックカラーやダークモードなどの対応も行いました。
 
-マテリアルデザインに準拠すること
+### CI/CD
 
-## 提出方法
+テスト・リント: [.github/workflows/analyze-and-test.yml](.github/workflows/analyze-and-test.yml)
+ビルド・デプロイ: [.github/workflows/deploy.yml]([.github/workflows/deploy.yml])
 
-- GitHub の public リポジトリの URL をお知らせください
-- 別の方法で提出する場合はご相談ください（Git のコミット履歴が分かる形式が望ましいです）
-- この課題とは別のコード(ご自身で公開されているOSS等)をもって課題の提出とすることをご希望の場合はご相談ください
+GitHub Actionsを使用して、テスト・リント・ビルド・デプロイを行えるようにしました。
+また、ジョブやワークフローの分割を適切に行なって並列処理・キャッシュの導入などをすることで素早く完了するようにしました。
+GitHub Actionsの時間制限を考慮して、時間のかかるデプロイは条件を使用して無駄なビルドが行われないようにしました。
+特にiOSのビルドについてはLinux Runnerよりもかなり高いため、mainブランチでのみ実行するようにしています。
+自動でのフォーマットは導入せず、手動でのフォーマットを行うようにしています。
 
-## 評価ポイント
+### リント
 
-- レビューのしやすさ
-  - README の充実
-  - 適切なコメント
-  - GitHub のプルリクエスト機能などの利用
-- Git
-  - 適切な gitignore の設定
-  - 適切なコミット粒度
-  - 適切なブランチ運用
-- 簡潔性・可読性・安全性・保守性の高いコード
-- Dart の言語機能を適切に使いこなせているか
-- テスト
-  - テストが導入しやすい構成
-  - Unit・UI テストがある
-- UI/UX
-  - エラー発生時の処理
-  - 画面回転・様々な画面サイズ対応
-  - Theme の適切な利用・ダークモードの対応
-  - 多言語対応
-  - アニメーションなど
-- CI/CD
-  - ビルド
-  - テスト
-  - リント
-  - フォーマット
-  - 仮のデプロイ環境
+[very_good_analysis](https://pub.dev/packages/very_good_analysis)を使用しました。
+個人的にリンターの設定はコードの統一性を高めるために可能な限り厳しくした方が良いと考えているため、この設定を使用しました。
 
-上記以外でも高く評価できるポイントがあれば同等に考慮します。
+## 開発環境
 
-アピールする点があれば、README に箇条書きなどで記載してください。
+FlutterについてはFlutter Webにおいてホットリロードが機能しなかったため、正しく動作するBeta版に変更しました。
+なお、バージョン間での差異があるため、リリースビルド時はStable版・開発時はBeta版のような構成にはしておりません。
+詳しくは下記のIssueをご参照ください。
+https://github.com/tuxsnct/flutter-engineer-codecheck/issues/9
 
-## 参考記事
-
-評価ポイントについて詳しくまとめた記事がありますので、ぜひご覧ください。
-
-- [私が（iOS エンジニアの）採用でコードチェックする時何を見ているのか](https://qiita.com/lovee/items/d76c68341ec3e7beb611)
-- [ゆめみの Android の採用コーディング試験を公開しました](https://qiita.com/blendthink/items/aa70b8b3106fb4e3555f)
-
-## AI サービスの利用について
-
-ChatGPT等のAIサービスを利用することは、禁止しておりません。
-
-利用にあたって工夫したプロンプトやソースコメント等をご提出頂くことで、加点評価する場合もあります。(減点評価はありません)
-
-また、弊社コードチェック担当者もAIサービスを利用させていただく場合があります。
-AIサービスの利用は差し控えてもらいたい等のご要望があれば、お気軽にお知らせください。
-
-## Mac をお持ちでない場合について
-
-Mac をお持ちでない場合は課題提出時にその旨お伝えください。
-iOS に関連するコード、動作をレビュー対象から除外いたします。
+```
+MacBook Air M2 24GB/512GB
+Android Studio Iguana | 2023.2.1 Patch 1
+Flutter 3.22.0-0.1.pre • channel beta • https://github.com/flutter/flutter.git
+Framework • revision 29babcb32a (7 days ago) • 2024-04-03 17:17:04 -0500
+Engine • revision 97550907b7
+Tools • Dart 3.4.0 (build 3.4.0-282.1.beta) • DevTools 2.34.2
+```
