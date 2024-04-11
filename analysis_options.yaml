@@ -1,6 +1,17 @@
 # 個人的にコードの一貫性を重視しているためflutter_lintsから変更
 include: package:very_good_analysis/analysis_options.yaml
 
+analyzer:
+  errors:
+    invalid_annotation_target: ignore
+  exclude:
+    - lib/**.g.dart
+    - lib/**.freezed.dart
+    - test/**.mocks.dart
+  plugins:
+    - custom_lint
+
 linter:
   rules:
+    one_member_abstracts: false
     public_member_api_docs: false
