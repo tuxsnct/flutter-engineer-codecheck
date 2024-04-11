@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:github_colour/github_colour.dart';
+import 'package:github_viewer/config/providers.dart';
 import 'package:github_viewer/features/common/infrastructure/models/repository_model.dart';
 
 class RepositoryDetailScreen extends ConsumerWidget {
@@ -47,8 +47,8 @@ class RepositoryDetailScreen extends ConsumerWidget {
                     width: 20,
                     height: 20,
                     decoration: BoxDecoration(
-                      color: GitHubColour.getExistedInstance()[
-                          repository.language!],
+                      color:
+                          ref.read(githubColourProvider(repository.language)),
                       shape: BoxShape.circle,
                     ),
                   ),
