@@ -50,14 +50,23 @@ class HomeRoute extends GoRouteData {
  */
 @TypedGoRoute<RepositoryDetailRoute>(path: '/repository')
 class RepositoryDetailRoute extends GoRouteData {
-  const RepositoryDetailRoute({required this.$extra}) : super();
+  const RepositoryDetailRoute({this.$extra}) : super();
 
-  final RepositoryModel $extra;
+  final RepositoryModel? $extra;
 
   // TODO(tuxsnct): 値を直接渡さないようにする
   @override
-  Widget build(BuildContext context, GoRouterState state) =>
-      RepositoryDetailScreen(repository: $extra);
+  Widget build(BuildContext context, GoRouterState state) {
+    if ($extra != null) {
+      return RepositoryDetailScreen(repository: $extra!);
+    } else {
+      // $extraが存在しない時(Webでリロードが行われた時など)はホーム画面にリダイレクト
+      WidgetsBinding.instance.addPostFrameCallback(
+        (_) => const HomeRoute().go(context),
+      );
+      return nil;
+    }
+  }
 }
 
 /*
